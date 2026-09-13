@@ -3,8 +3,8 @@ const DARK = "dark";
 const LIGHT = "light";
 
 const themeSwitch = document.getElementById("theme-switch");
-
-/* Тема */
+const burger = document.querySelector(".burger");
+const mobileMenu = document.querySelector(".mobile-menu");
 
 const setTheme = (theme) => {
   document.documentElement.setAttribute("data-theme", theme);
@@ -29,8 +29,28 @@ const initTheme = () => {
   themeSwitch.addEventListener("change", toggleTheme);
 };
 
-/* Запуск */
+const toggleMenu = (isOpen) => {
+  burger.classList.toggle("burger--open", isOpen);
+  mobileMenu.classList.toggle("mobile-menu--open", isOpen);
+  document.body.classList.toggle("is-locked", isOpen);
+};
+
+const initMobileMenu = () => {
+  burger.addEventListener("click", () =>
+    toggleMenu(!mobileMenu.classList.contains("mobile-menu--open")),
+  );
+
+  mobileMenu.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      toggleMenu(false);
+    }
+  });
+};
 
 if (themeSwitch) {
   initTheme();
+}
+
+if (burger && mobileMenu) {
+  initMobileMenu();
 }
